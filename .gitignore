@@ -33,4 +33,4 @@ yarn-error.log*
 pnpm-debug.log*
 
 # Exclude specific directories and files
-# (Ensure these lines are not excluding the files you want to include)
+.history/
