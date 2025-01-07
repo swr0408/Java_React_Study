@@ -49,3 +49,5 @@ public class PasswordHasher implements CommandLineRunner {
         }
     }
 }
+    }
+}

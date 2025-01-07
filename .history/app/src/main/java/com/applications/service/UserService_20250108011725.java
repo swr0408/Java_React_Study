@@ -10,6 +10,7 @@ import com.applications.dto.UserRegisterRequest;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
+
 import java.sql.Timestamp;
 import java.time.Instant;
 
@@ -24,8 +25,6 @@ public class UserService {
 
     @Autowired
     private UserRepository userRepository;
-
-    private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
     @Autowired
     private UserListRepository userListRepository;
@@ -74,13 +73,7 @@ public class UserService {
         // UserRepositoryでUserエンティティにアクセスし、loginIdを検索
         User user = userRepository.findByLoginId(loginId);
         // ユーザーが存在し、パスワードが一致する場合はtrueを返す
-        if (user != null) {
-            boolean isPasswordMatch = passwordEncoder.matches(password, user.getPassword());
-            System.out.println("Password match: " + isPasswordMatch);
-            return isPasswordMatch;
-        }
-        System.out.println("User not found");
-        return false;
+        return user != null && user.getPassword().equals(password);
     }
 
     // ログインIDに基づいてユーザーを取得するメソッド
@@ -103,11 +96,5 @@ public class UserService {
     // ログインIDに基づいてユーザーを取得するメソッド
     public User findUserWithDetails(String loginId) {
         return userRepository.findByLoginId(loginId);
-    }
-
-    // ユーザー登録を行うメソッド
-    public void registerUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
     }
 }

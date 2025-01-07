@@ -38,6 +38,8 @@ public class PasswordHasher implements CommandLineRunner {
         }
 
         // ユーザーのパスワードがハッシュ化されていない場合、ハッシュ化する
+       
+    public void run(String... args) throws Exception {
         List<User> users = userRepository.findAll();
         for (User user : users) {
             String rawPassword = user.getPassword();

@@ -74,13 +74,7 @@ public class UserService {
         // UserRepositoryでUserエンティティにアクセスし、loginIdを検索
         User user = userRepository.findByLoginId(loginId);
         // ユーザーが存在し、パスワードが一致する場合はtrueを返す
-        if (user != null) {
-            boolean isPasswordMatch = passwordEncoder.matches(password, user.getPassword());
-            System.out.println("Password match: " + isPasswordMatch);
-            return isPasswordMatch;
-        }
-        System.out.println("User not found");
-        return false;
+        return user != null && passwordEncoder.matches(password, user.getPassword());
     }
 
     // ログインIDに基づいてユーザーを取得するメソッド
@@ -103,11 +97,5 @@ public class UserService {
     // ログインIDに基づいてユーザーを取得するメソッド
     public User findUserWithDetails(String loginId) {
         return userRepository.findByLoginId(loginId);
-    }
-
-    // ユーザー登録を行うメソッド
-    public void registerUser(User user) {
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.save(user);
     }
 }

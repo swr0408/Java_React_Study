@@ -1,10 +1,7 @@
 package com.applications;
 
 import com.applications.model.Admin;
-import com.applications.model.User;
 import com.applications.repository.AdminRepository;
-import com.applications.repository.UserRepository;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -17,9 +14,6 @@ public class PasswordHasher implements CommandLineRunner {
 
     @Autowired
     private AdminRepository adminRepository;
-
-    @Autowired
-    private UserRepository userRepository;
 
     private BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 
@@ -47,5 +41,7 @@ public class PasswordHasher implements CommandLineRunner {
                 userRepository.save(user);
             }
         }
+    }
+}
     }
 }

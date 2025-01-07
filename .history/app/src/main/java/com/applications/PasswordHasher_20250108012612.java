@@ -1,7 +1,6 @@
 package com.applications;
 
 import com.applications.model.Admin;
-import com.applications.model.User;
 import com.applications.repository.AdminRepository;
 import com.applications.repository.UserRepository;
 
@@ -47,5 +46,7 @@ public class PasswordHasher implements CommandLineRunner {
                 userRepository.save(user);
             }
         }
+    }
+}
     }
 }
