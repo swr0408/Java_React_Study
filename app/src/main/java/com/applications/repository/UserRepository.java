@@ -7,6 +7,6 @@ import org.springframework.stereotype.Repository;
 /* JpaRepositoryを継承しUserクラスを指定することで、DBのuser_login_info
    テーブルに接続しデータを取得するためのクラス */
    @Repository
-   public interface UserRepository extends JpaRepository<User, Integer> {
+   public interface UserRepository extends JpaRepository<User, String> {
        User findByLoginId(String loginId);
    }
