@@ -1,12 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import styles from './UserMyPage.module.css';
+import styles from './css/UserMyPage.module.css';
+import { UserDetail } from './types/User';
 
 const UserMyPage = () => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState<UserDetail | null> (null);
   const location = useLocation();
   const navigate = useNavigate();
-  const { loginId } = location.state;
+  const { loginId } = location.state as { loginId: string };
 
   // 会員情報を取得
   useEffect(() => {

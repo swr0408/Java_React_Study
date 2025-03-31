@@ -21,9 +21,10 @@ public class SecurityConfig {
             .antMatchers("/api/admins/login", "/api/admins/register", "/api/users/latest","/api/user/login","/api/user/**","/api/user/register/**").permitAll() 
             // その他のエンドポイントは認証を要求する
             .anyRequest().authenticated() 
-            .and()
-            .httpBasic(); 
-
+            .and();
+            // HTTP Basic認証を無効化
+            // .formLogin().disable()
+            // .httpBasic().disable();
         return http.build();
     }
 }

@@ -1,10 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './AdminMyPage.module.css';
+import styles from './css/AdminMyPage.module.css';
+import { User } from './types/User';
+import { formatPhoneNumber } from './utils';
 
-const AdminMyPage = () => {
-  const [users, setUsers] = useState([]);
-  const [page, setPage] = useState(0);
+const AdminMyPage: React.FC = () => {
+  const [users, setUsers] = useState<User[]>([]);
+  const [page, setPage] = useState<number>(0);
   const navigate = useNavigate();
 
   // ページが読み込まれた時に管理者一覧を取得
@@ -13,7 +15,7 @@ const AdminMyPage = () => {
   }, [page]);
 
   // 管理者一覧を取得する関数
-  const fetchUsers = (page) => {
+  const fetchUsers = (page: number) => {
     // APIのURLを環境変数から取得
     const baseUrl = process.env.REACT_APP_API_BASE_URL;
     fetch(`${baseUrl}/api/users/latest?page=${page}`)
@@ -31,20 +33,6 @@ const AdminMyPage = () => {
         setUsers(data.content);
       })
       .catch(error => console.error('Error fetching users:', error));
-  };
-
-
-  // 電話番号のフォーマット
-  const formatPhoneNumber = (phoneNumber) => {
-    if (!phoneNumber) return '';
-
-    // 携帯電話番号のフォーマット
-    if (phoneNumber.startsWith('090') || phoneNumber.startsWith('080') || phoneNumber.startsWith('070') || phoneNumber.startsWith('050')) {
-      return phoneNumber.replace(/(\d{3})(\d{4})(\d{4})/, '$1-$2-$3');
-    }
-
-    // 固定電話番号のフォーマット
-    return phoneNumber.replace(/(\d{2,4})(\d{2,4})(\d{4})/, '$1-$2-$3');
   };
 
   //ボタン押下時のリダイレクト処理

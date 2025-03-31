@@ -1,22 +1,28 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import './Login.css';
+import './css/Login.css';
+import { AdminRegisterForm, ErrorMessage } from './types/Admin';
 
 function AdminLogin() {
   //ユーザー名、パスワード、エラーメッセージの状態を保持
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
+  const [username, setUsername] = useState<AdminRegisterForm['loginId']>('');
+  const [password, setPassword] = useState<AdminRegisterForm['password']>('');
+  const [error, setError] = useState<ErrorMessage>(null);
   //別のコンポーネントに移動すらためのナビゲーション
   const navigate = useNavigate();
 
   //フォーム送信時に呼び出される関数
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>): Promise<void> => {
     //ブラウザのデフォルト操作を防ぐ
     event.preventDefault();
     try {
       // 環境変数からAPIのベースURLを取得
       const baseUrl = process.env.REACT_APP_API_BASE_URL;
+      if(!baseUrl) {
+        setError('APIのURLが設定されていません');
+        return;
+      }
+
       // ログインAPIを呼び出す
       const response = await fetch(`${baseUrl}/api/admins/login`, {
         method: 'POST',
@@ -25,6 +31,7 @@ function AdminLogin() {
         },
         body: JSON.stringify({ loginId: username, password }),
       });
+
       // ログイン成功・失敗の処理
       if (response.ok) {
         navigate('/admin/myPage');
