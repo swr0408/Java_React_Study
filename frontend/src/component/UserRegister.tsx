@@ -2,16 +2,17 @@ import React, { useState } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import UserRegisterStep1 from './UserRegisterStep1';
 import UserRegisterStep2 from './UserRegisterStep2';
+import { UserRegisterForm } from './types/User';
 
 // 会員登録項目
-const UserRegister = () => {
-  const [formData, setFormData] = useState({
+const UserRegister: React.FC = () => {
+  const [formData, setFormData] = useState<UserRegisterForm> ({
     loginId: '',
     password: '',
     category: '',
     personalNumber: '',
-    firstName: '',
-    lastName: '',
+    firstNameKanji: '',
+    lastNameKanji: '',
     firstNameKana: '',
     lastNameKana: '',
     postalCode1: '',
@@ -21,7 +22,7 @@ const UserRegister = () => {
     address3: '',
     phone: '',
     birthDate: '',
-    sex: '',
+    sex: 0,
     email: ''
   });
 

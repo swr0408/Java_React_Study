@@ -1,10 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from './UserRegister.module.css';
+import styles from './css/UserRegister.module.css';
+import { UserRegisterForm } from './types/User';
+
+type UserRegisterStep2Props = {
+  formData: UserRegisterForm;
+  setFormData: React.Dispatch<React.SetStateAction<UserRegisterForm>>;
+}
 
 // 会員登録ステップ2
-const UserRegisterStep2 = ({ formData, setFormData }) => {
-  const [error, setError] = useState('');
+const UserRegisterStep2: React.FC <UserRegisterStep2Props> = ({ formData, setFormData }) => {
+  const [error, setError] = useState<string>('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,8 +22,8 @@ const UserRegisterStep2 = ({ formData, setFormData }) => {
     setFormData((prevFormData) => ({
       ...prevFormData,
       personalNumber: generateRandomPersonalNumber(),
-      firstName: prevFormData.firstName || '',
-      lastName: prevFormData.lastName || '',
+      firstName: prevFormData.firstNameKanji || '',
+      lastName: prevFormData.lastNameKanji || '',
       firstNameKana: prevFormData.firstNameKana || '',
       lastNameKana: prevFormData.lastNameKana || '',
       postalCode1: prevFormData.postalCode1 || '',
@@ -27,13 +33,13 @@ const UserRegisterStep2 = ({ formData, setFormData }) => {
       address3: prevFormData.address3 || '',
       phone: prevFormData.phone || '',
       birthDate: prevFormData.birthDate || '',
-      sex: prevFormData.sex || '',
+      sex: prevFormData.sex || 0,
       email: prevFormData.email || ''
     }));
   }, [setFormData]);
 
   // 会員登録Step2の処理
-  const handleRegister = async (event) => {
+  const handleRegister = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     try {
       const baseUrl = process.env.REACT_APP_API_BASE_URL;
@@ -82,8 +88,8 @@ const UserRegisterStep2 = ({ formData, setFormData }) => {
           <input
             type="text"
             id="lastName"
-            value={formData.lastName}
-            onChange={(e) => setFormData({ ...formData, lastName: e.target.value })}
+            value={formData.lastNameKanji}
+            onChange={(e) => setFormData({ ...formData, lastNameKanji: e.target.value })}
             required
           />
         </div>
@@ -92,8 +98,8 @@ const UserRegisterStep2 = ({ formData, setFormData }) => {
           <input
             type="text"
             id="firstName"
-            value={formData.firstName}
-            onChange={(e) => setFormData({ ...formData, firstName: e.target.value })}
+            value={formData.firstNameKanji}
+            onChange={(e) => setFormData({ ...formData, firstNameKanji: e.target.value })}
             required
           />
         </div>
@@ -192,7 +198,7 @@ const UserRegisterStep2 = ({ formData, setFormData }) => {
           <select
             id="sex"
             value={formData.sex}
-            onChange={(e) => setFormData({ ...formData, sex: e.target.value })}
+            onChange={(e) => setFormData({ ...formData, sex: Number(e.target.value) })}
             required
           >
             <option value="">選択してください</option>

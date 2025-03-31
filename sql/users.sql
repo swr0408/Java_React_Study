@@ -11,7 +11,8 @@ CREATE TABLE users (
     address2 VARCHAR(100) NOT NULL COMMENT '市区町村',
     address3 VARCHAR(100) NULL COMMENT '住所',
     phone CHAR(11) NOT NULL COMMENT '電話番号',
-    birth_date CHAR(8) NOT NULL COMMENT '生年月日',
+    -- birth_date CHAR(8) NOT NULL COMMENT '生年月日',
+    MODIFY COLUMN birth_date DATE NOT NULL COMMENT '生年月日';
     sex INT(1) NOT NULL COMMENT '性別',
     email CHAR(100) NOT NULL COMMENT 'E-mail',
     regist_date TIMESTAMP NOT NULL COMMENT '登録日',

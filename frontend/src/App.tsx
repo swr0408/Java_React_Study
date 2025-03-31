@@ -8,7 +8,7 @@ import AdminRegister from './component/AdminRegister';
 import UserRegister from './component/UserRegister';
 
 // ルーティング
-const App = () => {
+const App: React.FC = () => {
   return (
     <div id="app">
       <Router>
